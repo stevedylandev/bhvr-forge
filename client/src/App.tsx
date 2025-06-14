@@ -1,21 +1,24 @@
 import { useState } from "react";
-import { createPublicClient, http } from "viem";
-import { sepolia } from "viem/chains";
+import { createTestClient, http, publicActions, walletActions } from "viem";
+import { foundry } from "viem/chains";
 import { counterAbi } from "contracts";
 import type { ApiResponse } from "shared";
 import "./App.css";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
-const CONTRACT_ADDRESS = "0x742d35Cc6634C0532925a3b8D404fBaF464DfD85";
+const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 function App() {
   const [data, setData] = useState<ApiResponse | undefined>();
   const [counterValue, setCounterValue] = useState<bigint | undefined>();
 
-  const client = createPublicClient({
-    chain: sepolia,
+  const client = createTestClient({
+    chain: foundry,
+    mode: "anvil",
     transport: http(),
-  });
+  })
+    .extend(publicActions)
+    .extend(walletActions);
 
   async function callAPI() {
     try {

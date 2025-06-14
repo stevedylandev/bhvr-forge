@@ -1,17 +1,27 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { createPublicClient, http } from 'viem'
-import { sepolia } from 'viem/chains'
+import { createTestClient, http, publicActions, walletActions } from 'viem'
+import { foundry } from 'viem/chains'
 import type { ApiResponse } from 'shared'
 import { counterAbi } from 'contracts'
 
 const app = new Hono()
 app.use(cors())
 
-// Web3 client setup
-const client = createPublicClient({
-  chain: sepolia,
+const client = createTestClient({
+  chain: foundry,
+  mode: 'anvil',
   transport: http()
+})
+  .extend(publicActions)
+  .extend(walletActions)
+
+app.get("/hello", async (c) => {
+  const response: ApiResponse = {
+    message: "Hello bhvr!",
+    success: true
+  }
+  return c.json(response)
 })
 
 app.get('/contracts/:address/counter', async (c) => {
