@@ -2,7 +2,7 @@
 
 ![cover](https://cdn.bhvr.dev/bhvr-forge.png)
 
-A full-stack TypeScript and Solidity monorepo starter with shared types, using Bun, Hono, Vite, React, and Forge
+A full-stack TypeScript and Solidity monorepo starter with shared types, using Bun, Hono, Vite, React, and Forge. Based of the existing [bhvr stack](https://bhvr.dev).
 
 > [!WARNING]
 > This repo is still under testing, please report any bugs you might have!
